@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Парсер маркетплейсов: цены конкурентов и выгрузка в Excel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:#f4f6fa;color:#1b2432}
+.wrap{max-width:1360px;margin:0 auto;padding:54px 48px 60px}
+.tag{display:inline-block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#7a5af5;background:#efeaff;border-radius:40px;padding:7px 16px;margin-bottom:20px;font-weight:600}
+h1{font-size:38px;line-height:1.16;font-weight:650;margin-bottom:13px;letter-spacing:-.01em}
+.lead{font-size:16.5px;line-height:1.62;color:#5b6a7f;max-width:740px;margin-bottom:40px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.stat{background:#fff;border:1px solid #e3e8f0;border-radius:16px;padding:21px 24px}
+.stat .v{font-size:28px;font-weight:650;margin-bottom:4px;letter-spacing:-.02em}
+.stat .l{font-size:12.5px;color:#7a899d;line-height:1.4}
+.cols{display:grid;grid-template-columns:1fr 372px;gap:26px;align-items:start}
+.card{background:#fff;border:1px solid #e3e8f0;border-radius:18px;overflow:hidden}
+.chead{padding:20px 26px 17px;border-bottom:1px solid #eef1f6;display:flex;align-items:center;justify-content:space-between}
+.chead h2{font-size:16px;font-weight:620}
+.xls{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#1a7f4b;background:#e7f6ee;border:1px solid #c8e9d8;padding:7px 13px;border-radius:9px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:500;color:#8593a8;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;padding:13px 26px;background:#fafbfd;border-bottom:1px solid #eef1f6}
+td{padding:13px 26px;border-bottom:1px solid #f2f4f8;color:#2b3648}
+tr:last-child td{border-bottom:none}
+.nm{font-weight:560}
+.src{font-size:11.5px;color:#8593a8;margin-top:2px}
+.dn{color:#1a7f4b;font-weight:600}
+.up{color:#d04545;font-weight:600}
+.flat{color:#8593a8}
+.bar{height:5px;border-radius:4px;background:#eef1f6;overflow:hidden;width:76px;margin-top:6px}
+.bar i{display:block;height:100%;background:#7a5af5}
+.side{display:flex;flex-direction:column;gap:22px}
+.panel{background:#fff;border:1px solid #e3e8f0;border-radius:18px;padding:24px 26px}
+.panel h3{font-size:15px;font-weight:620;margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:10px 0;border-bottom:1px solid #f2f4f8;color:#4a586c}
+.row:last-child{border-bottom:none}
+.row b{font-weight:620;color:#1b2432}
+.log{background:#141a24;border-radius:14px;padding:18px 20px;font-family:Consolas,monospace;font-size:12.3px;line-height:1.75;color:#9fb0c4}
+.log .ok{color:#5fd68f}
+.log .w{color:#f0c060}
+.log .p{color:#6fa8ff}
+.feat{margin-top:26px;background:#fff;border:1px solid #e3e8f0;border-radius:18px;padding:26px 28px}
+.feat h3{font-size:15px;font-weight:620;margin-bottom:17px}
+.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:15px 28px;font-size:13.8px;line-height:1.5;color:#4a586c}
+.fg div{padding-left:20px;position:relative}
+.fg div::before{content:"";position:absolute;left:0;top:6px;width:9px;height:9px;border-radius:50%;border:2px solid #7a5af5}
+.foot{margin-top:36px;padding-top:20px;border-top:1px solid #e3e8f0;display:flex;justify-content:space-between;font-size:13px;color:#7a899d}
+@media(max-width:900px){.wrap{padding:32px 20px}.cols{grid-template-columns:1fr}.stats,.fg{grid-template-columns:1fr 1fr}h1{font-size:27px}th,td{padding:11px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">Автоматизация · Python</span>
+  <h1>Слежение за ценами конкурентов на маркетплейсах</h1>
+  <p class="lead">Скрипт каждое утро обходит карточки на Wildberries и Ozon, снимает цену, остаток и позицию в выдаче, сравнивает со вчерашним днём и присылает готовый отчёт в Excel и уведомление в Телеграм, если конкурент уронил цену.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="v">4 200</div><div class="l">карточек в отслеживании</div></div>
+    <div class="stat"><div class="v">6 мин</div><div class="l">полный обход каталога</div></div>
+    <div class="stat"><div class="v">2 раза в день</div><div class="l">сбор по расписанию</div></div>
+    <div class="stat"><div class="v">98,6%</div><div class="l">успешных запросов</div></div>
+  </div>
+
+  <div class="cols">
+    <div class="card">
+      <div class="chead"><h2>Отчёт за 1 октября</h2><span class="xls">Выгрузка в Excel</span></div>
+      <table>
+        <tr><th>Товар</th><th>Цена вчера</th><th>Цена сегодня</th><th>Изменение</th><th>Остаток</th><th>Позиция</th></tr>
+        <tr><td><div class="nm">Гель-лак, 12 мл, молочный</div><div class="src">Wildberries · продавец «НейлПро»</div></td><td>349 ₽</td><td>299 ₽</td><td class="dn">−14%</td><td>1 240<div class="bar"><i style="width:72%"></i></div></td><td>3</td></tr>
+        <tr><td><div class="nm">Лампа для маникюра 48 Вт</div><div class="src">Ozon · продавец «Beauty Store»</div></td><td>1 890 ₽</td><td>1 890 ₽</td><td class="flat">без изменений</td><td>86<div class="bar"><i style="width:14%"></i></div></td><td>7</td></tr>
+        <tr><td><div class="nm">Набор фрез, 6 шт</div><div class="src">Wildberries · продавец «МастерНейл»</div></td><td>720 ₽</td><td>845 ₽</td><td class="up">+17%</td><td>412<div class="bar"><i style="width:38%"></i></div></td><td>12</td></tr>
+        <tr><td><div class="nm">База каучуковая, 30 мл</div><div class="src">Ozon · продавец «НейлПро»</div></td><td>1 150 ₽</td><td>990 ₽</td><td class="dn">−14%</td><td>0<div class="bar"><i style="width:2%"></i></div></td><td>21</td></tr>
+        <tr><td><div class="nm">Топ без липкого слоя, 15 мл</div><div class="src">Wildberries · продавец «Шайн»</div></td><td>640 ₽</td><td>610 ₽</td><td class="dn">−5%</td><td>973<div class="bar"><i style="width:60%"></i></div></td><td>5</td></tr>
+      </table>
+    </div>
+
+    <div class="side">
+      <div class="panel">
+        <h3>Что в отчёте</h3>
+        <div class="row"><span>Товаров собрано</span><b>4 187</b></div>
+        <div class="row"><span>Цена упала</span><b>312</b></div>
+        <div class="row"><span>Цена выросла</span><b>188</b></div>
+        <div class="row"><span>Закончился остаток</span><b>24</b></div>
+        <div class="row"><span>Карточка скрыта</span><b>9</b></div>
+      </div>
+      <div class="log">
+        <div><span class="p">10:00:02</span> старт обхода, категорий: 14</div>
+        <div><span class="p">10:01:17</span> Wildberries: 2 640 карточек <span class="ok">ok</span></div>
+        <div><span class="p">10:03:44</span> Ozon: 1 547 карточек <span class="ok">ok</span></div>
+        <div><span class="p">10:04:10</span> повтор по таймауту: 12 <span class="w">retry</span></div>
+        <div><span class="p">10:05:51</span> отчёт сохранён: report_01-10.xlsx</div>
+        <div><span class="p">10:05:53</span> уведомление отправлено <span class="ok">ok</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat">
+    <h3>Возможности</h3>
+    <div class="fg">
+      <div>Сбор цен, остатков и позиций</div>
+      <div>Сравнение со вчерашним днём</div>
+      <div>Отчёт в Excel и Google Таблицах</div>
+      <div>Уведомления в Телеграм</div>
+      <div>Запуск по расписанию на сервере</div>
+      <div>Обход блокировок и капчи</div>
+      <div>История цен за любой период</div>
+      <div>Свои категории и список конкурентов</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Python, asyncio, Playwright, PostgreSQL, openpyxl, Docker</span><span>Срок разработки: 4 дня</span></div>
+</div>
+</body>
+</html>

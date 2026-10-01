@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Портфолио веб-разработчика</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:#0e1014;color:#eceff4}
+.wrap{max-width:1180px;margin:0 auto;padding:68px 32px 80px}
+.hi{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#6d7a8c;margin-bottom:18px}
+h1{font-size:42px;line-height:1.12;font-weight:650;letter-spacing:-.015em;margin-bottom:16px}
+.lead{font-size:17px;line-height:1.62;color:#95a0b0;max-width:680px;margin-bottom:22px}
+.links{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:54px}
+.links a{font-size:14px;color:#cfd6e0;text-decoration:none;border:1px solid #242b35;border-radius:9px;padding:10px 17px}
+.links a:hover{border-color:#4f9cf9;color:#4f9cf9}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.card{display:block;text-decoration:none;color:inherit;background:#151920;border:1px solid #222935;border-radius:18px;overflow:hidden;transition:border-color .18s,transform .18s}
+.card:hover{border-color:#4f9cf9;transform:translateY(-2px)}
+.ph{height:188px;background:#1b212b;position:relative;overflow:hidden;border-bottom:1px solid #222935}
+.ph img{width:100%;display:block}
+.ct{padding:22px 24px 24px}
+.kind{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:#4f9cf9;margin-bottom:9px;font-weight:600}
+.ct h2{font-size:19px;font-weight:620;margin-bottom:9px;line-height:1.3}
+.ct p{font-size:14px;line-height:1.57;color:#8e9aab}
+.st{margin-top:14px;font-size:12.5px;color:#64707f}
+.foot{margin-top:56px;padding-top:24px;border-top:1px solid #1d232c;font-size:13.5px;color:#64707f;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.foot a{color:#95a0b0;text-decoration:none}
+@media(max-width:820px){.wrap{padding:40px 18px 56px}h1{font-size:29px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hi">Веб-разработка · боты · автоматизация</div>
+  <h1>Портфолио</h1>
+  <p class="lead">Делаю сайты, телеграм-ботов и скрипты автоматизации. Ниже работающие примеры: каждый открывается целиком, можно листать и проверять на телефоне.</p>
+  <div class="links">
+    <a href="https://kwork.ru/user/sirenka05" target="_blank" rel="noopener">Профиль на Kwork</a>
+    <a href="https://github.com/Silokon" target="_blank" rel="noopener">Код на GitHub</a>
+  </div>
+
+  <div class="grid">
+    <a class="card" href="01-klinika/">
+      <div class="ph"><img src="prev/01.png" alt=""></div>
+      <div class="ct"><div class="kind">Лендинг</div><h2>Сайт стоматологии с записью на приём</h2>
+        <p>Первый экран с ценой и записью, услуги, врачи, отзывы, форма. Чистая вёрстка без конструкторов.</p>
+        <div class="st">HTML, CSS, JavaScript</div></div>
+    </a>
+    <a class="card" href="02-saas/">
+      <div class="ph"><img src="prev/02.png" alt=""></div>
+      <div class="ct"><div class="kind">Лендинг</div><h2>Сайт IT-платформы с тарифами</h2>
+        <p>Продукт по шагам, сравнение тарифов, вопросы и ответы, две формы захвата. Тёмная тема, анимация при прокрутке.</p>
+        <div class="st">HTML, CSS, JavaScript</div></div>
+    </a>
+    <a class="card" href="03-oplata/">
+      <div class="ph"><img src="prev/03.png" alt=""></div>
+      <div class="ct"><div class="kind">Коммерческий проект</div><h2>Лендинг с онлайн-оплатой и видео</h2>
+        <p>Вёрстка по макету, видео, тарифы, приём оплаты картой и по СБП, заявки сами уходят в Google Таблицу.</p>
+        <div class="st">HTML, PHP, ЮKassa, Google Sheets API</div></div>
+    </a>
+    <a class="card" href="04-bot/">
+      <div class="ph"><img src="prev/04.png" alt=""></div>
+      <div class="ct"><div class="kind">Телеграм-бот</div><h2>Бот приёма заявок с оплатой</h2>
+        <p>Заказ оформляется в переписке, оплата картой и СБП, уведомление владельцу и панель со статусами заявок.</p>
+        <div class="st">Python, aiogram 3, PostgreSQL, ЮKassa</div></div>
+    </a>
+    <a class="card" href="05-parser/">
+      <div class="ph"><img src="prev/05.png" alt=""></div>
+      <div class="ct"><div class="kind">Автоматизация</div><h2>Слежение за ценами на маркетплейсах</h2>
+        <p>Обход карточек Wildberries и Ozon по расписанию, отчёт в Excel и уведомление, если конкурент снизил цену.</p>
+        <div class="st">Python, Playwright, PostgreSQL, openpyxl</div></div>
+    </a>
+    <a class="card" href="06-booking/">
+      <div class="ph"><img src="prev/06.png" alt=""></div>
+      <div class="ct"><div class="kind">Веб-приложение</div><h2>Бронирование помещений с календарём</h2>
+        <p>Занятость в реальном времени, оплата брони онлайн, защита от двойной записи, статистика загрузки.</p>
+        <div class="st">Next.js, TypeScript, PostgreSQL, Stripe</div></div>
+    </a>
+    <a class="card" href="07-speed/">
+      <div class="ph"><img src="prev/07.png" alt=""></div>
+      <div class="ct"><div class="kind">Доработка сайта</div><h2>Ускорение сайта: было и стало</h2>
+        <p>Загрузка с 8,2 до 1,4 секунды, оценка скорости с 31 до 94, починены мобильная версия и форма заявок.</p>
+        <div class="st">WordPress, PHP, JavaScript, webp</div></div>
+    </a>
+  </div>
+
+  <div class="foot">
+    <span>Связь через <a href="https://kwork.ru/user/sirenka05" target="_blank" rel="noopener">Kwork</a> или FL.ru</span>
+    <span>Демо-проекты собраны для портфолио, данные в них условные</span>
+  </div>
+</div>
+</body>
+</html>

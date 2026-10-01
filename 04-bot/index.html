@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Телеграм-бот приёма заявок с оплатой</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:#0f1621;color:#e8edf4}
+.wrap{max-width:1360px;margin:0 auto;padding:56px 48px 64px}
+.tag{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#4f9cf9;border:1px solid rgba(79,156,249,.35);border-radius:40px;padding:7px 16px;margin-bottom:22px}
+h1{font-size:40px;line-height:1.15;font-weight:650;margin-bottom:14px}
+.lead{font-size:17px;line-height:1.6;color:#95a4b8;max-width:720px;margin-bottom:44px}
+.grid{display:grid;grid-template-columns:330px 1fr;gap:34px;align-items:start}
+.phone{background:#17212b;border-radius:30px;padding:14px;border:1px solid #243445;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.phone-top{display:flex;align-items:center;gap:11px;padding:10px 8px 14px;border-bottom:1px solid #22303f}
+.ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#4f9cf9,#2b6cd4);display:flex;align-items:center;justify-content:center;font-size:17px}
+.pname{font-size:15px;font-weight:600}
+.pstat{font-size:12px;color:#6c8097}
+.chat{padding:16px 6px 8px;display:flex;flex-direction:column;gap:9px}
+.msg{max-width:84%;padding:9px 13px;border-radius:14px;font-size:13.5px;line-height:1.45}
+.bot{background:#1f2c3a;border-bottom-left-radius:5px}
+.me{background:#2b5278;align-self:flex-end;border-bottom-right-radius:5px}
+.kb{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}
+.kb span{background:#22303f;border:1px solid #2d3f52;color:#8fb6e4;font-size:12px;padding:7px 11px;border-radius:9px}
+.pay{background:#1f2c3a;border-radius:14px;padding:12px 13px;font-size:13px;line-height:1.5}
+.pay b{display:block;font-size:14px;margin-bottom:5px}
+.paybtn{display:block;text-align:center;margin-top:9px;background:#4f9cf9;color:#0f1621;font-weight:600;font-size:13px;padding:9px;border-radius:9px}
+.col{display:flex;flex-direction:column;gap:26px}
+.card{background:#141d29;border:1px solid #223042;border-radius:18px;padding:26px 28px}
+.card h2{font-size:17px;font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:9px}
+.dot{width:7px;height:7px;border-radius:50%;background:#49d17f}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:500;color:#6c8097;font-size:12px;text-transform:uppercase;letter-spacing:.07em;padding-bottom:11px;border-bottom:1px solid #223042}
+td{padding:12px 0;border-bottom:1px solid #1b2634;color:#c3cedc}
+td.num{color:#6c8097}
+.st{font-size:12px;padding:4px 10px;border-radius:30px;display:inline-block}
+.st.new{background:rgba(79,156,249,.14);color:#78b4ff}
+.st.paid{background:rgba(73,209,127,.13);color:#49d17f}
+.st.work{background:rgba(238,183,74,.14);color:#eeb74a}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{background:#141d29;border:1px solid #223042;border-radius:16px;padding:20px 22px}
+.stat .v{font-size:27px;font-weight:650;margin-bottom:5px}
+.stat .l{font-size:12.5px;color:#6c8097;line-height:1.4}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:13px 26px;font-size:14px;line-height:1.55;color:#aeb9c8}
+.feat div{padding-left:21px;position:relative}
+.feat div::before{content:"";position:absolute;left:0;top:7px;width:9px;height:9px;border-radius:50%;border:2px solid #4f9cf9}
+.foot{margin-top:40px;padding-top:22px;border-top:1px solid #1d2838;display:flex;justify-content:space-between;font-size:13px;color:#5d7087}
+@media(max-width:860px){.wrap{padding:34px 20px}.grid{grid-template-columns:1fr}h1{font-size:28px}.stats{grid-template-columns:1fr 1fr}.feat{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">Telegram · Python · aiogram</span>
+  <h1>Бот приёма заявок с оплатой и личной админкой</h1>
+  <p class="lead">Клиент оформляет заказ прямо в переписке: выбирает услугу, оставляет контакты, платит картой. Заявка сразу падает владельцу в уведомления и попадает в панель, где видно статус, сумму и историю общения.</p>
+
+  <div class="grid">
+    <div class="phone">
+      <div class="phone-top">
+        <div class="ava">🦊</div>
+        <div><div class="pname">Студия «Лисица»</div><div class="pstat">бот · онлайн</div></div>
+      </div>
+      <div class="chat">
+        <div class="msg bot">Здравствуйте! Подберём формат за минуту. Что вас интересует?
+          <div class="kb"><span>Фотосессия</span><span>Видеосъёмка</span><span>Аренда студии</span></div>
+        </div>
+        <div class="msg me">Аренда студии</div>
+        <div class="msg bot">Свободные окна на этой неделе:
+          <div class="kb"><span>Ср, 10:00</span><span>Ср, 14:00</span><span>Пт, 12:00</span></div>
+        </div>
+        <div class="msg me">Пт, 12:00</div>
+        <div class="msg bot">Записала. Осталось подтвердить бронь, оплата картой или СБП.</div>
+        <div class="pay"><b>Аренда зала, 2 часа</b>Пятница, 12:00 до 14:00<br>К оплате 4 400 ₽
+          <div class="paybtn">Оплатить</div>
+        </div>
+        <div class="msg bot">Оплата прошла, бронь подтверждена. Напомню за час до начала.</div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="stats">
+        <div class="stat"><div class="v">312</div><div class="l">заявок за месяц</div></div>
+        <div class="stat"><div class="v">41 сек</div><div class="l">среднее время оформления</div></div>
+        <div class="stat"><div class="v">87%</div><div class="l">оплат без участия менеджера</div></div>
+        <div class="stat"><div class="v">24/7</div><div class="l">приём заказов</div></div>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span>Панель заявок</h2>
+        <table>
+          <tr><th>№</th><th>Клиент</th><th>Услуга</th><th>Сумма</th><th>Статус</th></tr>
+          <tr><td class="num">1294</td><td>Анна К.</td><td>Аренда зала, 2 ч</td><td>4 400 ₽</td><td><span class="st paid">оплачено</span></td></tr>
+          <tr><td class="num">1293</td><td>Марат С.</td><td>Видеосъёмка</td><td>18 000 ₽</td><td><span class="st work">в работе</span></td></tr>
+          <tr><td class="num">1292</td><td>Ольга В.</td><td>Фотосессия</td><td>7 500 ₽</td><td><span class="st paid">оплачено</span></td></tr>
+          <tr><td class="num">1291</td><td>Денис П.</td><td>Аренда зала, 4 ч</td><td>8 800 ₽</td><td><span class="st new">новая</span></td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span>Что внутри</h2>
+        <div class="feat">
+          <div>Приём заявок по шагам, без длинных анкет</div>
+          <div>Оплата картой и СБП через ЮKassa</div>
+          <div>Уведомление владельцу в первую минуту</div>
+          <div>Напоминания клиенту перед визитом</div>
+          <div>Выгрузка заявок в Excel и Google Таблицы</div>
+          <div>Рассылка по базе клиентов из админки</div>
+          <div>Защита от спама и повторных заявок</div>
+          <div>Работа на сервере без участия владельца</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Python, aiogram 3, PostgreSQL, ЮKassa, Docker</span><span>Срок разработки: 5 дней</span></div>
+</div>
+</body>
+</html>

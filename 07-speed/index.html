@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ускорение сайта и мобильная версия: было и стало</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:#0d1117;color:#e6edf3}
+.wrap{max-width:1360px;margin:0 auto;padding:54px 48px 60px}
+.tag{display:inline-block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#49d17f;border:1px solid rgba(73,209,127,.3);border-radius:40px;padding:7px 16px;margin-bottom:20px;font-weight:600}
+h1{font-size:38px;line-height:1.16;font-weight:650;margin-bottom:13px;letter-spacing:-.01em}
+.lead{font-size:16.5px;line-height:1.62;color:#8b98a9;max-width:760px;margin-bottom:40px}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:26px}
+.side{background:#161b22;border:1px solid #232b36;border-radius:18px;padding:26px 28px}
+.side.after{border-color:#1f4d35;background:linear-gradient(180deg,#13241b 0%,#161b22 60%)}
+.lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6e7d8f;margin-bottom:18px;font-weight:600}
+.side.after .lbl{color:#49d17f}
+.score{display:flex;align-items:center;gap:22px;margin-bottom:24px}
+.ring{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:650;flex-shrink:0}
+.ring.bad{background:conic-gradient(#e05252 0 31%,#2a2026 31%);color:#ff8b8b}
+.ring.good{background:conic-gradient(#49d17f 0 97%,#1c2a22 97%);color:#49d17f}
+.ring i{width:74px;height:74px;border-radius:50%;background:#161b22;display:flex;align-items:center;justify-content:center;font-style:normal}
+.side.after .ring i{background:#13241b}
+.sinfo .t{font-size:14.5px;font-weight:600;margin-bottom:5px}
+.sinfo .d{font-size:13px;color:#8b98a9;line-height:1.5}
+.m{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:12px 0;border-top:1px solid #232b36;color:#aab6c4}
+.m b{font-weight:620;font-size:15px}
+.m b.bad{color:#ff8b8b}
+.m b.good{color:#49d17f}
+.probs{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:26px}
+.panel{background:#161b22;border:1px solid #232b36;border-radius:18px;padding:26px 28px}
+.panel h3{font-size:15.5px;font-weight:620;margin-bottom:18px}
+.li{display:flex;gap:12px;font-size:13.8px;line-height:1.55;color:#aab6c4;padding:9px 0;border-bottom:1px solid #1d242e}
+.li:last-child{border-bottom:none}
+.ic{flex-shrink:0;width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:1px;font-weight:700}
+.ic.x{background:rgba(224,82,82,.14);color:#ff8b8b}
+.ic.v{background:rgba(73,209,127,.14);color:#49d17f}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+.stat{background:#161b22;border:1px solid #232b36;border-radius:16px;padding:20px 22px}
+.stat .v{font-size:27px;font-weight:650;margin-bottom:4px;color:#49d17f}
+.stat .l{font-size:12.5px;color:#6e7d8f;line-height:1.4}
+.work{background:#161b22;border:1px solid #232b36;border-radius:18px;padding:26px 28px}
+.work h3{font-size:15.5px;font-weight:620;margin-bottom:17px}
+.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:15px 28px;font-size:13.8px;line-height:1.5;color:#aab6c4}
+.fg div{padding-left:20px;position:relative}
+.fg div::before{content:"";position:absolute;left:0;top:6px;width:9px;height:9px;border-radius:50%;border:2px solid #49d17f}
+.foot{margin-top:34px;padding-top:20px;border-top:1px solid #232b36;display:flex;justify-content:space-between;font-size:13px;color:#6e7d8f}
+@media(max-width:900px){.wrap{padding:32px 20px}.ba,.probs{grid-template-columns:1fr}.stats,.fg{grid-template-columns:1fr 1fr}h1{font-size:27px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">Доработка сайта · было и стало</span>
+  <h1>Ускорение сайта и порядок в мобильной версии</h1>
+  <p class="lead">Сайт услуг на WordPress грузился восемь секунд, на телефоне разъезжалась вёрстка, а заявки с формы терялись. Переписала загрузку изображений и скриптов, собрала мобильную версию заново и починила отправку формы. Переделывать сайт целиком не понадобилось.</p>
+
+  <div class="ba">
+    <div class="side">
+      <div class="lbl">Было</div>
+      <div class="score">
+        <div class="ring bad"><i>31</i></div>
+        <div class="sinfo"><div class="t">Оценка скорости на телефоне</div><div class="d">Больше половины посетителей закрывали страницу, не дождавшись загрузки</div></div>
+      </div>
+      <div class="m"><span>Загрузка первого экрана</span><b class="bad">8,2 с</b></div>
+      <div class="m"><span>Вес страницы</span><b class="bad">6,4 МБ</b></div>
+      <div class="m"><span>Запросов при открытии</span><b class="bad">148</b></div>
+      <div class="m"><span>Отказы с мобильных</span><b class="bad">71%</b></div>
+    </div>
+    <div class="side after">
+      <div class="lbl">Стало</div>
+      <div class="score">
+        <div class="ring good"><i>94</i></div>
+        <div class="sinfo"><div class="t">Оценка скорости на телефоне</div><div class="d">Страница открывается почти мгновенно, заявки с телефона дошли до почты</div></div>
+      </div>
+      <div class="m"><span>Загрузка первого экрана</span><b class="good">1,4 с</b></div>
+      <div class="m"><span>Вес страницы</span><b class="good">0,9 МБ</b></div>
+      <div class="m"><span>Запросов при открытии</span><b class="good">37</b></div>
+      <div class="m"><span>Отказы с мобильных</span><b class="good">34%</b></div>
+    </div>
+  </div>
+
+  <div class="probs">
+    <div class="panel">
+      <h3>Что нашла при разборе</h3>
+      <div class="li"><span class="ic x">!</span><span>Фотографии по 3-4 МБ грузились в полном размере, даже если на экране занимали ладонь</span></div>
+      <div class="li"><span class="ic x">!</span><span>Шесть плагинов тянули свои библиотеки на каждой странице, включая те, где они не нужны</span></div>
+      <div class="li"><span class="ic x">!</span><span>Мобильное меню перекрывало номер телефона, позвонить с экрана было невозможно</span></div>
+      <div class="li"><span class="ic x">!</span><span>Форма заявки отправлялась на почту, которой давно не пользовались</span></div>
+    </div>
+    <div class="panel">
+      <h3>Что сделала</h3>
+      <div class="li"><span class="ic v">✓</span><span>Перевела изображения в webp, включила подгрузку по мере прокрутки</span></div>
+      <div class="li"><span class="ic v">✓</span><span>Убрала лишние скрипты и стили, остальное объединила и сжала</span></div>
+      <div class="li"><span class="ic v">✓</span><span>Пересобрала мобильную вёрстку, телефон вынесла в закреплённую кнопку</span></div>
+      <div class="li"><span class="ic v">✓</span><span>Починила форму, добавила дубль заявки в Телеграм, чтобы ничего не терялось</span></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">в 5,8 раза</div><div class="l">быстрее открывается первый экран</div></div>
+    <div class="stat"><div class="v">+37%</div><div class="l">заявок с телефонов за месяц</div></div>
+    <div class="stat"><div class="v">2 дня</div><div class="l">заняла работа целиком</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">потерянных заявок после правки формы</div></div>
+  </div>
+
+  <div class="work">
+    <h3>С чем ещё помогаю по готовым сайтам</h3>
+    <div class="fg">
+      <div>Правка ошибок и белого экрана</div>
+      <div>Перенос с конструкторов на свой движок</div>
+      <div>Мобильная версия с нуля</div>
+      <div>Подключение оплаты и доставки</div>
+      <div>Восстановление после взлома</div>
+      <div>Переезд на другой хостинг и домен</div>
+      <div>Интеграция с CRM и Телеграмом</div>
+      <div>Доработка чужого кода без переделки всего</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>WordPress, PHP, JavaScript, webp, Nginx, PageSpeed Insights</span><span>Срок работы: 2 дня</span></div>
+</div>
+</body>
+</html>
