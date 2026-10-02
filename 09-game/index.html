@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Игра в телеграме: кликер с заданиями и призами</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:#0b0a14;color:#efeafc}
+.wrap{max-width:1360px;margin:0 auto;padding:54px 48px 62px}
+.tag{display:inline-block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#b388ff;border:1px solid rgba(179,136,255,.33);border-radius:40px;padding:7px 16px;margin-bottom:20px;font-weight:600}
+h1{font-size:38px;line-height:1.15;font-weight:650;margin-bottom:13px;letter-spacing:-.015em}
+.lead{font-size:16.5px;line-height:1.62;color:#9a93b4;max-width:780px;margin-bottom:40px}
+.cols{display:grid;grid-template-columns:290px 290px 1fr;gap:24px;align-items:start}
+
+.phone{background:#140f22;border-radius:26px;border:1px solid #251b3d;overflow:hidden;box-shadow:0 22px 54px rgba(0,0,0,.5)}
+.ph-top{padding:12px 15px;border-bottom:1px solid #241a3a;display:flex;align-items:center;justify-content:space-between}
+.ph-top b{font-size:14px;font-weight:600}
+.coins{font-size:12.5px;color:#ffcf5c;font-weight:700}
+.scr{padding:16px 15px 18px}
+
+.score{text-align:center;margin-bottom:14px}
+.score .v{font-size:36px;font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#ffd166,#ff8fab);-webkit-background-clip:text;background-clip:text;color:transparent}
+.score .l{font-size:11.5px;color:#7d769a;margin-top:3px;letter-spacing:.06em;text-transform:uppercase}
+.tapzone{aspect-ratio:1/1;border-radius:50%;margin:6px auto 14px;width:170px;background:radial-gradient(circle at 36% 30%,#7b5cff,#3c2d8a 62%,#241a52);display:grid;place-items:center;font-size:58px;box-shadow:0 0 0 7px rgba(123,92,255,.13),0 16px 40px rgba(99,71,229,.35)}
+.energy{margin-bottom:12px}
+.energy .row{display:flex;justify-content:space-between;font-size:11.5px;color:#8c85a8;margin-bottom:6px}
+.bar{height:8px;background:#1f1733;border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#7b5cff,#b388ff)}
+.boosts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bst{background:#1b1430;border:1px solid #2a2046;border-radius:12px;padding:10px 6px;text-align:center}
+.bst .ic{font-size:18px}
+.bst b{display:block;font-size:10.5px;margin-top:4px;font-weight:600}
+.bst span{font-size:9.5px;color:#7d769a}
+
+.sect{font-size:11px;color:#7d769a;text-transform:uppercase;letter-spacing:.11em;margin:0 0 10px;font-weight:700}
+.task{display:flex;align-items:center;gap:10px;background:#1a1330;border:1px solid #271d42;border-radius:12px;padding:10px 11px;margin-bottom:8px}
+.task .ic{width:32px;height:32px;border-radius:9px;background:#241a3e;display:grid;place-items:center;font-size:15px;flex-shrink:0}
+.task b{display:block;font-size:12px;font-weight:600;line-height:1.3}
+.task span{font-size:10.5px;color:#7d769a}
+.task .rw{margin-left:auto;font-size:11.5px;font-weight:700;color:#ffcf5c;white-space:nowrap}
+.lead-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #1f1733;font-size:12.5px}
+.lead-row:last-child{border-bottom:none}
+.pos{width:22px;font-weight:700;color:#7d769a;font-size:12px}
+.pos.top{color:#ffcf5c}
+.av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#7b5cff,#ff8fab);display:grid;place-items:center;font-size:10.5px;font-weight:700;color:#0b0a14}
+.lead-row .pts{margin-left:auto;font-weight:650;color:#c9c0e8}
+.me{background:#1b1430;margin:6px -8px 0;padding:9px 8px;border-radius:10px;border:1px solid #2d2250}
+
+.col{display:flex;flex-direction:column;gap:22px}
+.card{background:#120e1e;border:1px solid #221a38;border-radius:18px;padding:26px 28px}
+.card h2{font-size:17px;font-weight:620;margin-bottom:17px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.stat{background:#120e1e;border:1px solid #221a38;border-radius:16px;padding:19px 21px}
+.stat .v{font-size:25px;font-weight:650;margin-bottom:4px;letter-spacing:-.02em}
+.stat .l{font-size:12.5px;color:#7d769a;line-height:1.4}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:13px 26px;font-size:14px;line-height:1.55;color:#a79fc2}
+.feat div{padding-left:20px;position:relative}
+.feat div::before{content:"";position:absolute;left:0;top:6px;width:9px;height:9px;border-radius:50%;border:2px solid #b388ff}
+.foot{margin-top:38px;padding-top:21px;border-top:1px solid #1d1630;display:flex;justify-content:space-between;font-size:13px;color:#6b6388;flex-wrap:wrap;gap:10px}
+@media(max-width:1000px){.cols{grid-template-columns:1fr}.wrap{padding:32px 18px}h1{font-size:27px}.feat,.stats{grid-template-columns:1fr}.phone{max-width:320px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">Игра · Telegram Mini App</span>
+  <h1>Игра-кликер с заданиями, рейтингом и призами</h1>
+  <p class="lead">Игра открывается внутри телеграма: игрок копит очки, тратит энергию, выполняет задания за подписку и приглашение друзей и поднимается в общем рейтинге. Механика используется для раскрутки канала и возврата аудитории: за неделю игрок возвращается в среднем шесть раз.</p>
+
+  <div class="cols">
+    <div class="phone">
+      <div class="ph-top"><b>Лисья лапка</b><span class="coins">24 180 ◎</span></div>
+      <div class="scr">
+        <div class="score"><div class="v">24 180</div><div class="l">очков собрано</div></div>
+        <div class="tapzone">🦊</div>
+        <div class="energy">
+          <div class="row"><span>Энергия</span><span>740 / 1000</span></div>
+          <div class="bar"><i style="width:74%"></i></div>
+        </div>
+        <div class="boosts">
+          <div class="bst"><div class="ic">⚡</div><b>Ускорение</b><span>12 ч</span></div>
+          <div class="bst"><div class="ic">✋</div><b>Мультитап</b><span>ур. 4</span></div>
+          <div class="bst"><div class="ic">🔋</div><b>Запас</b><span>ур. 3</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone">
+      <div class="ph-top"><b>Задания и рейтинг</b><span class="coins">+3 новых</span></div>
+      <div class="scr">
+        <div class="sect">Задания</div>
+        <div class="task"><span class="ic">📣</span><span><b>Подписаться на канал</b><span>одно нажатие</span></span><span class="rw">+5 000</span></div>
+        <div class="task"><span class="ic">👥</span><span><b>Позвать друга</b><span>за каждого</span></span><span class="rw">+2 500</span></div>
+        <div class="task"><span class="ic">🎬</span><span><b>Посмотреть ролик</b><span>раз в день</span></span><span class="rw">+800</span></div>
+        <div class="task"><span class="ic">🛍</span><span><b>Купить в магазине</b><span>по чеку</span></span><span class="rw">+10 000</span></div>
+
+        <div class="sect" style="margin-top:16px">Рейтинг недели</div>
+        <div class="lead-row"><span class="pos top">1</span><span class="av">АК</span><span>Анна К.</span><span class="pts">91 400</span></div>
+        <div class="lead-row"><span class="pos top">2</span><span class="av">МС</span><span>Марат С.</span><span class="pts">78 220</span></div>
+        <div class="lead-row"><span class="pos top">3</span><span class="av">ОВ</span><span>Ольга В.</span><span class="pts">63 940</span></div>
+        <div class="lead-row"><span class="pos">4</span><span class="av">ДП</span><span>Денис П.</span><span class="pts">41 070</span></div>
+        <div class="lead-row me"><span class="pos">12</span><span class="av">Я</span><span>Вы</span><span class="pts">24 180</span></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="stats">
+        <div class="stat"><div class="v">6 раз</div><div class="l">игрок возвращается за неделю</div></div>
+        <div class="stat"><div class="v">41%</div><div class="l">игроков приводят друга</div></div>
+        <div class="stat"><div class="v">0</div><div class="l">установок, игра внутри телеграма</div></div>
+        <div class="stat"><div class="v">8 300</div><div class="l">игроков в первый месяц</div></div>
+      </div>
+
+      <div class="card">
+        <h2>Что внутри</h2>
+        <div class="feat">
+          <div>Накопление очков и прокачка улучшений</div>
+          <div>Энергия с восстановлением по времени</div>
+          <div>Задания за подписку и покупки</div>
+          <div>Приглашение друзей со своей ссылкой</div>
+          <div>Общий рейтинг игроков</div>
+          <div>Ежедневные награды за заходы</div>
+          <div>Призы и промокоды победителям</div>
+          <div>Админка с настройкой заданий и наград</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Зачем бизнесу игра</h2>
+        <div class="feat" style="grid-template-columns:1fr">
+          <div>Задания привязываются к нужным действиям: подписаться на канал, привести друга, купить в магазине. Игрок делает это сам, ради очков, а не по рекламе</div>
+          <div>Аудитория возвращается без рассылок: за наградой заходят каждый день, и канал остаётся в живых чатах, а не в архиве</div>
+          <div>Вся база игроков остаётся у владельца, по ней можно раздавать промокоды и звать на акции</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>React, TypeScript, Telegram Mini Apps SDK, Python, aiogram, PostgreSQL, Redis</span><span>Срок разработки: 2-3 недели</span></div>
+</div>
+</body>
+</html>
